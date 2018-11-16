@@ -1,12 +1,56 @@
-## Welcome to GitHub Pages
+## Welcome to the Symmetry cluster's documentation
 
-You can use the [editor on GitHub](https://github.com/PerimeterInstitute/SymmetryDocs/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Modules
 
-### Markdown
+### Slurm
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Python
+
+#### "System" python
+
+The "system" versions of python, `/usr/bin/python` and `/usr/bin/python3`, are provided by the Ubuntu distribution.
+We will only update these versions as new versions are released by Ubuntu, and we will probably only install
+python packages that also have an Ubuntu package (for example, `python-numpy`).
+
+You can install your own python packages using `pip install --user`.  For example:
+
+```
+pip3 install --user astropy
+```
+
+This will install the `astropy` package inside my home directory, in `$HOME/.local/lib/python3.7/site-packages/astropy`.
+
+#### Conda
+
+We have installed the `anaconda` python distribution.  You can use it via:
+
+```
+module load anaconda2
+```
+
+or
+
+```
+module load anaconda3
+```
+
+If you prefer to have more control over your python environment (or you want to have multiple independent setups), 
+you can use the `conda` package manager.  For example:
+
+```
+module load miniconda3
+conda create -n myenvA astropy
+source activate myenvA
+python -c "import astropy; print(astropy.__file__)"
+###> /home/me/.conda/envs/myenvA/lib/python3.7/site-packages/astropy/__init__.py
+```
+
+
+
+
+
+### (markdown cheat sheet)
 
 ```markdown
 Syntax highlighted code block
@@ -25,13 +69,3 @@ Syntax highlighted code block
 
 [Link](url) and ![Image](src)
 ```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/PerimeterInstitute/SymmetryDocs/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
