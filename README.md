@@ -44,6 +44,8 @@ conda create -n myenvA astropy
 source activate myenvA
 python -c "import astropy; print(astropy.__file__)"
 ###> /home/me/.conda/envs/myenvA/lib/python3.7/site-packages/astropy/__init__.py
+# when you are finished:
+source deactivate
 ```
 
 
