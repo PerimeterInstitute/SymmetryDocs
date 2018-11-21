@@ -85,7 +85,8 @@ Pre-installed software:
 
 - [Python](https://www.python.org)
 
-- [Slurm](https://slurm.schedmd.com) scheduler (our queueing system)
+- [Slurm](https://slurm.schedmd.com) resource manager (our queueing
+  system)
 
 ### Modules
 
@@ -260,14 +261,166 @@ to use `top` to monitor one's processes?)
 Generally, we recommend running jobs on Symmetry's compute nodes, as
 described below.
 
-### Slurm queueing system
+#### Slurm resource manager
 
-(to be described: basic principles, available queues)
+To avoid conflict when accessing the compute nodes, we use the
+[Slurm](https://slurm.schedmd.com) resource manager (aka "scheduler"
+or "queueing system"). Slurm keeps track of which compute nodes are
+currently used by who. If you want to use a certain number of compute
+nodes, you have to ask Slurm, and you might have to wait until the
+nodes are available before you can run your job.
 
-### Running jobs interactively
+The basic work flow is thus as follows:
+
+1. You write a *batch script* (shell script) for your job. (Below are
+   some examples.) This script defines which resources you want (e.g.
+   "4 nodes for 7 days"), and also how to run your job.
+
+1. You submit this script to Slurm via `sbatch` (see below for
+   examples).
+
+1. If the system is busy, your job might have to wait in the queue for
+   some time. Slurm will try to be "fair" to all users (whatever that
+   means). Your job's priority is determined by several factors,
+   including how much you have used Symmetry recently, and how many
+   resources your job requests.
+
+1. Slurm will run your job automatically (that's what *batch* means).
+   This does generally not work with notebooks (e.g. Mathematica,
+   Jupyter). Instead, you need to write a script with a text editor
+   (see below for examples).
+
+1. After the job has finished, you examine its output that was
+   presumably written to a file.
+
+#### Using Slurm
+
+After `module load slurm`, you can get an overall view of the system
+with `sinfo`. This might output a description like this:
+
+```
+$ sinfo
+PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+defq*        up 7-00:00:00      6 drain* cn[017,019-020,040,045,056]
+defq*        up 7-00:00:00      1  drain cn002
+defq*        up 7-00:00:00      1  alloc cn001
+defq*        up 7-00:00:00     68   idle cn[003-016,018,021-039,041-044,046-055,057-076]
+debugq       up    1:00:00      6 drain* cn[017,019-020,040,045,056]
+debugq       up    1:00:00      1  drain cn002
+debugq       up    1:00:00      1  alloc cn001
+debugq       up    1:00:00     68   idle cn[003-016,018,021-039,041-044,046-055,057-076]
+```
+
+This means there are two *partitions* (queues) available, called
+`defq` (the default queue) and `debugq` (for debugging and short
+interactive jobs). `defq` allows jobs to run for up to 7 days,
+`debugq` for up to 1 hour. Not shown here is the fact that jobs in
+`debugq` have a much higher priority and will usually start before any
+jobs waiting in `defq`.
+
+The description of the compute nodes is (unfortunately) repeated for
+both queues. Nodes in the `drain` state are not available; they are
+either reserved for administrative use (here `cn002`), or are
+unresponsive (here `cn[017,019-020,040,045,056]`; these nodes are
+presumably either being updated, or might be reporting a hardware
+issue). Nodes in the `alloc` state are currently in use, and nodes in
+the `idle` state are currently free.
+
+The command `squeue` shows all jobs that are currently either waiting
+or running. `squeue -u USERNAME` (replace `USERNAME` with your user
+name) shows only your jobs.
+
+#### Running jobs interactively
 
 (JupyterHub, srun, reservations, ...)
 
-### Running batch jobs
+#### Running batch jobs
 
-(to be described, point to examples)
+Slurm comes with extensive documentation and tutorials.
+
+When running a job on Symmetry, you need to describe how many *nodes*
+and *cores* your job is requesting. Determining this correctly is not
+always straightforward:
+
+- First, you need to know whether your application can run across
+  multiple nodes. Many applications cannot, because it is difficult to
+  implement this. Usually you will know whether your application
+  supports this. For exampe, in Mathematica you need to use *remote
+  kernels* to enable this. In Fortran, C, or C++, you need to use
+  `MPI` or a similar mechanism. In Julia or Python programs, you also
+  need to explicitly support using multiple processes.
+
+- You also need to know whether your application uses multiple
+  threads. Even if your application does not support this explicitly,
+  it might use a library that uses multi-threading. For example,
+  Mathematica, Julia, or Python are not multi-threaded by default, but
+  if you use linear algebra (e.g. systems with large matrices for
+  floating-point numbers), then they might use multiple threads. In
+  Fortran, C, or C++, you can use OpenMP for multi-threading. (Note
+  that `OpenMP` and `MPI`/`OpenMPI` are very different, despite the
+  very similar names.)
+
+- If your application uses multiple nodes, then it most likely will
+  use all the cores on each node efficiently. This gives the highest
+  performance, but is the most difficult to implement.
+
+- If your application use a single node but is multi-threaded, then
+  you should probably run only a single program on each compute node.
+  This is the easiest case.
+
+- If your application is not multi-threaded, then it iuses only a
+  single core. Each node of Symmetry has many cores (up to 40). It
+  thus makes sense to run multiple copies of your application at the
+  same time on the same node, if there is enough memory available.
+
+Here are some examples that might be useful for a quick start:
+
+**Note:** The Slurm scripts contain path names pointing into my
+(`eschnetter`'s) home directory. You need to change this to point into
+a directory of yours, otherwise you will not see the output.
+
+- Running Mathematica on 1 node: A multi-threaded code (using linear
+  algebra) [Mathematica script](examples/mathematica-manythreads.m)
+  [Slurm script](examples/mathematica-manythreads.sbatch) [example
+  output](examples/mathematica-manythreads.out)
+
+- Running Mathematica on 1 node: A single-threaded code, running
+  several independent Mathematica scripts simultaneously (e.g. a
+  parameter scan) [Mathematica script](examples/mathematica-onetask.m)
+  [Slurm script](examples/mathematica-manytasks.sbatch) [example
+  output](examples/mathematica-manytasks.out)
+
+- Running Julia on several nodes: A multi-processing code (using
+  Julia's built-in multi-processing capabilities) [Julia
+  script](examples/julia-manytasks.jl) [Slurm
+  script](examples/julia-manytasks.sbatch) [example
+  output](examples/julia-manytasks.out)
+
+- Running Julia on 1 node: A multi-threaded code (using linear
+  algebra) [Julia script](examples/julia-manythreads.jl) [Slurm
+  script](examples/julia-manythreads.sbatch) [example
+  output](examples/julia-manythreads.out)
+
+- Running a C program on several nodes: A multi-processing MPI code [C
+  code](examples/hello-mpi.c) [build
+  instructions](examples/hello-mpi.build) [Slurm
+  script](examples/hello-mpi.sbatch) [example
+  output](examples/hello-mpi.out)
+
+- Running a C program on several nodes: Ahybrid multi-processing
+  multi-threaded MPI/OpenMP code [C code](examples/hello-hybrid.c)
+  [build instructions](examples/hello-hybrid.build) [Slurm
+  script](examples/hello-hybrid.sbatch) [example
+  output](examples/hello-hybrid.out)
+
+- Running a C program on 1 node: A multi-threaded OpenMP code [C
+  code](examples/hello-openmp.c) [build
+  instructions](examples/hello-openmp.build) [Slurm
+  script](examples/hello-openmp.sbatch) [example
+  output](examples/hello-openmp.out)
+
+
+
+### File systems
+
+(home directory, GPFS)
