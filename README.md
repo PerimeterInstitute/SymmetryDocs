@@ -6,11 +6,6 @@ that every local symmetry of a physical system generates a
 conservation law. In honour of this principle, Perimeter's HPC system
 is called *Symmetry*.
 
-## Overview
-
-(Please report errors, omissions, and suggestions for this
-documentation to our [help desk](mailto:help@perimeterinstitute.ca).)
-
 Symmetry is intended to serve the needs of Perimeter researchers,
 filling a gap between personal devices such as laptops and desktops,
 and large national sytems offered e.g. by [Compute
@@ -19,6 +14,30 @@ is significantly more powerful than a laptop, but cannot compete with
 a national system such as
 [Graham](https://docs.computecanada.ca/wiki/Graham) or
 [Niagara](https://docs.computecanada.ca/wiki/Niagara).
+
+(This documentation is still under construction, and should be
+completed within the next days. Please report errors, omissions, and
+suggestions for this documentation to our [help
+desk](mailto:help@perimeterinstitute.ca).)
+
+
+
+## Contact and help
+
+As usual for all technical systems at Perimeter, the main channel to
+report issues and ask for assistance is our [help
+desk](mailto:help@perimeterinstitute.ca).
+
+For online discussions, there is a Gitter chat room [Computing at
+Perimeter](https://gitter.im/Computing-at-Perimeter/Lobby). This chat
+room is not restricted to discussing Symmetry, but is for all topics
+related to Computational Physics at Perimeter.
+
+
+
+## System description
+
+### Hardware
 
 Symmetry consists of:
 
@@ -39,35 +58,7 @@ Symmetry consists of:
 There are various additional bits and pieces, primarily for
 administration, that are mostly invisible to general users.
 
-## Access
-
-All researchers at Perimeter have in prinple access to Symmetry.
-Please contact the [help desk](mailto:help@perimeterinstitute.ca) to
-enable this access. It is probably a good idea to enable
-[VPN](https://portal.perimeterinstitute.ca/how-to/sonicwall-mobile-connection-vpn-installation-and-setup-instructions)
-and [ssh](https://portal.perimeterinstitute.ca/how-to/ssh-perimeter)
-access to Perimeter at the same time. Symmetry is located behind
-Perimeter's firewall, and is not directly accessible from the outside.
-
-There are two ways to access Symmetry, the traditional command-line
-based way using `ssh`, and via a web browser and `JupyterHub`:
-
-### Access via ssh
-
-To log in, use `ssh USERNAME@symmetry`. (Replace `USERNAME` with your
-user name.) This will ask for your Perimeter password. We recommend
-generating ssh keys and using an ssh key chain to allow a
-password-less access. (Question: Where is a good tutorial for this?)
-
-On Linux and MacOS, ssh is pre-installed. On Windows, you
-might need to install a client such as [PuTTY](https://www.putty.org).
-(Question: Is there a better alternative to PuTTY?)
-
-### Access via JupyterHub
-
-(Dustin Lang to write this section.)
-
-## Available software
+### Available Software
 
 Symmetry provides a wide range of software. If you need additional
 software, you can request this via the [help
@@ -94,7 +85,7 @@ Pre-installed software:
 
 - [Python](https://www.python.org)
 
-- [Slurm](https://slurm.schedmd.com) scheduler (our queuing system)
+- [Slurm](https://slurm.schedmd.com) scheduler (our queueing system)
 
 ### Modules
 
@@ -104,11 +95,84 @@ a module before the package is available. Use `module avail` to see
 what modules are avilable, `module load` to load a module. There are
 also `module list`, `module unload`, and `module help`.
 
-## Building and installing software yourself
+### Python
 
-(to be written)
+#### "System" Python
 
-## Running jobs
+The "system" versions of Python, `/usr/bin/python` and `/usr/bin/python3`, are provided by the Ubuntu distribution.
+We will only update these versions as new versions are released by Ubuntu, and we will probably only install
+Python packages that also have an Ubuntu package (for example, `python-numpy`).
+
+You can install your own Python packages using `pip install --user`.  For example:
+
+```
+pip3 install --user astropy
+```
+
+This will install the `astropy` package inside your home directory, in `$HOME/.local/lib/python3.7/site-packages/astropy`.
+
+#### Conda Python
+
+We have also installed the `anaconda` Python distribution.  You can use it via:
+
+```
+module load anaconda2
+```
+
+or
+
+```
+module load anaconda3
+```
+
+If you prefer to have more control over your Python environment (or you want to have multiple independent setups), 
+you can use the `conda` package manager.  For example:
+
+```
+module load miniconda3
+conda create -n myenvA astropy
+source activate myenvA
+python -c "import astropy; print(astropy.__file__)"
+###> /home/me/.conda/envs/myenvA/lib/python3.7/site-packages/astropy/__init__.py
+# when you are finished:
+source deactivate
+```
+
+
+
+## Using Symmetry
+
+### Access
+
+All researchers at Perimeter have in prinple access to Symmetry.
+Please contact the [help desk](mailto:help@perimeterinstitute.ca) to
+enable this access. It is probably a good idea to enable
+[VPN](https://portal.perimeterinstitute.ca/how-to/sonicwall-mobile-connection-vpn-installation-and-setup-instructions)
+and [ssh](https://portal.perimeterinstitute.ca/how-to/ssh-perimeter)
+access to Perimeter at the same time. Symmetry is located behind
+Perimeter's firewall, and is not directly accessible from the outside.
+
+There are two ways to access Symmetry, the traditional command-line
+based way using `ssh`, and via a web browser and `JupyterHub`:
+
+#### Access via ssh
+
+To log in, use `ssh USERNAME@symmetry`. (Replace `USERNAME` with your
+user name.) This will ask for your Perimeter password. We recommend
+generating ssh keys and using an ssh key chain to allow a
+password-less access. (Question: Where is a good tutorial for this?)
+
+On Linux and MacOS, ssh is pre-installed. On Windows, you
+might need to install a client such as [PuTTY](https://www.putty.org).
+(Question: Is there a better alternative to PuTTY?)
+
+#### Access via JupyterHub
+
+(to be described)
+
+
+
+### Running jobs
 
 While you can run jobs interactively on the head nodes, you need to be
 careful when doing so: Head nodes are shared between all users on
@@ -124,79 +188,14 @@ to use `top` to monitor one's processes?)
 Generally, we recommend running jobs on Symmetry's compute nodes, as
 described below.
 
+### Slurm queueing system
+
+(to be described: basic principles, available queues)
+
 ### Running jobs interactively
 
-(JupyterHub, srun, ...)
+(JupyterHub, srun, reservations, ...)
 
 ### Running batch jobs
 
-(Slurm)
-
-
-
-## Software descriptions
-
-#### "System" python
-
-The "system" versions of python, `/usr/bin/python` and `/usr/bin/python3`, are provided by the Ubuntu distribution.
-We will only update these versions as new versions are released by Ubuntu, and we will probably only install
-python packages that also have an Ubuntu package (for example, `python-numpy`).
-
-You can install your own python packages using `pip install --user`.  For example:
-
-```
-pip3 install --user astropy
-```
-
-This will install the `astropy` package inside my home directory, in `$HOME/.local/lib/python3.7/site-packages/astropy`.
-
-#### Conda
-
-We have installed the `anaconda` python distribution.  You can use it via:
-
-```
-module load anaconda2
-```
-
-or
-
-```
-module load anaconda3
-```
-
-If you prefer to have more control over your python environment (or you want to have multiple independent setups), 
-you can use the `conda` package manager.  For example:
-
-```
-module load miniconda3
-conda create -n myenvA astropy
-source activate myenvA
-python -c "import astropy; print(astropy.__file__)"
-###> /home/me/.conda/envs/myenvA/lib/python3.7/site-packages/astropy/__init__.py
-# when you are finished:
-source deactivate
-```
-
-
-
-
-
-### (markdown cheat sheet)
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
+(to be described, point to examples)
