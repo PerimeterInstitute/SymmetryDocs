@@ -97,6 +97,52 @@ also `module list`, `module unload`, and `module help`.
 
 ### Python
 
+#### Local versions
+
+We have installed Conda installations with some popular python
+packages pre-installed.  If you require additional packages, please
+contact the [help desk](mailto:help@perimeterinstitute.ca) and we will
+either install the package, or advise how best to proceed.
+
+To use these python environments, run one of these commands:
+```
+module load python
+```
+for the default Python 3.7 version, or
+
+```
+module load python/3.6
+```
+
+or
+
+```
+module load python/2.7
+```
+
+for these older versions.  Once you have loaded the module, you should see
+that this is tha `python` command that will be run:
+
+```
+$ module load python
+$ which python
+/cm/shared/apps/conda-environments/python37/bin/python
+$ python --version
+Python 3.7.0
+```
+
+If you would like to install a new package that is available through
+`pip`, you can install it within your home directory by running:
+
+```
+pip install --user [package-name]
+```
+
+Note that these python environments are the same ones used in the
+Jupyterhub service, so if you install a local package this way, it
+will be available to you in Jupyterhub.
+
+
 #### "System" Python
 
 The "system" versions of Python, `/usr/bin/python` and `/usr/bin/python3`, are provided by the Ubuntu distribution.
