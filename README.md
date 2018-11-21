@@ -2,11 +2,14 @@
 
 Symmetries are important in physics. [Noether's
 theorem](https://en.wikipedia.org/wiki/Noether%27s_theorem) states
-that every differentiable symmetry of a physical system leads to a
+that every local symmetry of a physical system generates a
 conservation law. In honour of this principle, Perimeter's HPC system
-is called "Symmetry".
+is called *Symmetry*.
 
 ## Overview
+
+(Please report errors, omissions, and suggestions for this
+documentation to our [help desk](mailto:help@perimeterinstitute.ca).)
 
 Symmetry is intended to serve the needs of Perimeter researchers,
 filling a gap between personal devices such as laptops and desktops,
@@ -91,28 +94,41 @@ Pre-installed software:
 
 - [Python](https://www.python.org)
 
-- [Slurm](https://slurm.schedmd.com) scheduler
+- [Slurm](https://slurm.schedmd.com) scheduler (our queuing system)
 
 ### Modules
 
-Some software requires a module to be loaded before it is available.
-Use `module avail` to see what modules are avilable, `module load` to
-load a module.
+Some of the software packages use [Environment
+modules](http://modules.sourceforge.net). This means you need to load
+a module before the package is available. Use `module avail` to see
+what modules are avilable, `module load` to load a module. There are
+also `module list`, `module unload`, and `module help`.
 
 ## Building and installing software yourself
 
+(to be written)
+
 ## Running jobs
 
-As described above, you can use either Symmetry's head nodes for
-interactive work, or can submit batch jobs via our queueing system.
+While you can run jobs interactively on the head nodes, you need to be
+careful when doing so: Head nodes are shared between all users on
+Symmetry. **Do this only for tasks that do not need many resources.**
+For example, compiling code, or brief tests of a Julia or Mathematica
+notebook are probably fine. If in doubt, use a compute node instead.
+
+If you overload a head node by using too much memory or too many
+threads, others might suffer, and an administrator might have to stop
+in and abort your task. (Question: Is there a tutorial explaining how
+to use `top` to monitor one's processes?)
+
+Generally, we recommend running jobs on Symmetry's compute nodes, as
+described below.
 
 ### Running jobs interactively
 
-You can run directly on Symmetry's head node. Be careful: This head
-node is shared between all users on Symmetry, and this should only be
-done for (ASDFASDFASDF)
+(JupyterHub, srun, ...)
 
-### Running jobs on compute nodes
+### Running batch jobs
 
 (Slurm)
 
