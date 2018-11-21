@@ -214,7 +214,33 @@ might need to install a client such as [PuTTY](https://www.putty.org).
 
 #### Access via JupyterHub
 
-(to be described)
+To log in, visit https://symmetry.pi.local .  As you might guess frohm
+the name, this is currently only available within the Perimeter
+network.  (If you want to access it from outside, please use the PI
+VPN.)
+
+Currently, you will get a warning that *Your connection is not
+secure*, because we don't have a proper security certificate yet.
+Please tell your web browser that this is okay (in Firefox: Advanced
+-> Add Exception -> Confirm Security Exception).
+
+Log in using your normal PI username and password, without the
+`@perimeterinstitute.ca`.
+
+You will arrive at a `Spawner Options` page with a drop-down menu,
+asking you where you would like to run your Jupyter notebook.  You can
+run on the head node---a computer shared with many other users---or on
+one of the compute nodes.  The head node will be available
+immediately, while the compute nodes may take a while to become
+available.  The compute nodes are more powerful and are more suitable
+for expensive computations or memory-hungry applications.
+
+Once you have selected where to run your notebook, you will arrive at
+the main Jupyter notebook page, which by default will show you your
+home directory.  On the right-hand side there is a `New` drop-down
+menu to start a new Kernel.
+
+[more to be written]
 
 
 
