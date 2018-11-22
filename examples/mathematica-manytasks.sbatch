@@ -10,6 +10,8 @@ pwd
 echo "SLURM_JOB_ID=$SLURM_JOB_ID"
 date
 
+module load mathematica
+
 # Run 200 tasks, each labelled from 1 to 200.
 # But run only 40 ($SLURM_CPUS_ON_NODE) at a time.
 seq 200 |

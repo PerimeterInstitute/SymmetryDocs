@@ -10,6 +10,8 @@ pwd
 echo "SLURM_JOB_ID=$SLURM_JOB_ID"
 date
 
+module load mathematica
+
 math -noprompt -script mathematica-manythreads.m
 
 date
