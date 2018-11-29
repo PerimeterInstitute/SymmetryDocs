@@ -149,7 +149,7 @@ will be available to you in Jupyterhub.
 The "system" versions of Python, `/usr/bin/python` and `/usr/bin/python3`, are provided by the Ubuntu distribution.
 We will only update these versions as new versions are released by Ubuntu, and we will probably only install
 Python packages that also have an Ubuntu package (for example, `python-numpy`).
-We would recommend using the Conda versions, as described above.
+We would recommend using the Local versions, as described above, or Anaconda if you want to create independent environments.
 
 #### Conda Python
 
