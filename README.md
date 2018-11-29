@@ -122,7 +122,7 @@ module load python/2.7
 ```
 
 for these older versions.  Once you have loaded the module, you should see
-that this is tha `python` command that will be run:
+that this is the `python` command that will be run:
 
 ```
 $ module load python
@@ -149,18 +149,12 @@ will be available to you in Jupyterhub.
 The "system" versions of Python, `/usr/bin/python` and `/usr/bin/python3`, are provided by the Ubuntu distribution.
 We will only update these versions as new versions are released by Ubuntu, and we will probably only install
 Python packages that also have an Ubuntu package (for example, `python-numpy`).
-
-You can install your own Python packages using `pip install --user`.  For example:
-
-```
-pip3 install --user astropy
-```
-
-This will install the `astropy` package inside your home directory, in `$HOME/.local/lib/python3.7/site-packages/astropy`.
+We would recommend using the Conda versions, as described above.
 
 #### Conda Python
 
-We have also installed the `anaconda` Python distribution.  You can use it via:
+We have also installed the `anaconda` Python distribution, which is a full-featured python distribution.
+You can use it via:
 
 ```
 module load anaconda2
@@ -173,18 +167,20 @@ module load anaconda3
 ```
 
 If you prefer to have more control over your Python environment (or you want to have multiple independent setups), 
-you can use the `conda` package manager.  For example:
+you can use the `conda` package manager to build an environment.  For example:
 
 ```
 module load miniconda3
+# Create a new environment named "myenvA", and install 'astropy' into it.
 conda create -n myenvA astropy
+# "Activate" (use) that environment
 source activate myenvA
+# Now observe that if you run python, it can find the 'astropy' you installed in your environment.
 python -c "import astropy; print(astropy.__file__)"
 ###> /home/me/.conda/envs/myenvA/lib/python3.7/site-packages/astropy/__init__.py
 # when you are finished:
 source deactivate
 ```
-
 
 
 ## Using Symmetry
@@ -215,15 +211,19 @@ might need to install a client such as [PuTTY](https://www.putty.org).
 
 #### Access via JupyterHub
 
-To log in, visit https://symmetry.pi.local .  As you might guess frohm
+To log in, visit <https://symmetry.pi.local>.  As you might guess from
 the name, this is currently only available within the Perimeter
 network.  (If you want to access it from outside, please use the PI
 VPN.)
 
 Currently, you will get a warning that *Your connection is not
 secure*, because we don't have a proper security certificate yet.
-Please tell your web browser that this is okay (in Firefox: Advanced
--> Add Exception -> Confirm Security Exception).
+Please tell your web browser that this is okay (in Firefox: *Advanced*
+→ *Add Exception* → *Confirm Security Exception*).
+
+![screenshot of https://symmetry.pi.local, with security warning]({{ site.url }}/assets/jupyterhub-1.png)
+
+![Jupyterhub login screen]({{ site.url }}/assets/jupyterhub-2.png)
 
 Log in using your normal PI username and password, without the
 `@perimeterinstitute.ca`.
@@ -233,15 +233,51 @@ asking you where you would like to run your Jupyter notebook.  You can
 run on the head node---a computer shared with many other users---or on
 one of the compute nodes.  The head node will be available
 immediately, while the compute nodes may take a while to become
-available.  The compute nodes are more powerful and are more suitable
-for expensive computations or memory-hungry applications.
+available, because we have to wait for a batch job to be scheduled.
+The compute nodes are more powerful and are more suitable for
+expensive computations or memory-hungry applications.
+
+![Jupyterhub Spawn Options screen]({{ site.url }}/assets/jupyterhub-3.png)
 
 Once you have selected where to run your notebook, you will arrive at
 the main Jupyter notebook page, which by default will show you your
-home directory.  On the right-hand side there is a `New` drop-down
-menu to start a new Kernel.
+home directory.  From here, you can *Upload* files (using the *Upload*
+button at the top-right), and download files (by clicking on them).
+At the top-right there is a *New* drop-down menu to start a new
+*Jupyter kernel*, an interactive programming environment.
 
-[more to be written]
+![Jupyterhub Spawn Options screen]({{ site.url }}/assets/jupyterhub-4.png)
+
+If you started running on the head node but would now like to run on a
+compute node, use the *Control Panel* button at the very top-right,
+then hit the *Stop My Server* button, then the *Start My Server*
+button will take you back to the *Spawner Options* page.
+
+Currently, we have several *Python* versions, a *Bash* (shell)
+environment, and a recent *Julia* version.  If you want to use a
+different programming language, please write a note to
+help@perimeterinstitute.ca with the details!
+
+#### Custom Kernels 
+
+It is possible to add your own *kernels* to the list of kernels.  When it
+starts, Jupyterhub will search for kernel files in these directories:
+
+```
+/cm/shared/apps/conda-environments/jupyterhub/share/jupyter/kernels/
+$HOME/.local/share/jupyter/kernels
+```
+
+To create a new kernel for yourself (say, using a special Conda
+environment you have created), you can copy one of the existing kernel
+files and modify it for your needs.  For example:
+
+```
+mkdir -p ~/.local/share/jupyter/kernels
+cp -r /cm/shared/apps/conda-environments/jupyterhub/share/jupyter/kernels/python37-conda ~/.local/share/jupyter/kernels/mykernel
+# Edit ~/.local/share/jupyter/kernels/mykernel/kernel.json
+# to point to the "python" executable inside your environment.
+```
 
 
 
