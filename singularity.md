@@ -50,10 +50,29 @@ bash-4.2$ cat /etc/redhat-release          ### The container looks like a RedHat
 CentOS Linux release 7.6.1810 (Core)       ### You could install RPM files here!
 ```
 
+Within the container (unlike Docker), you keep your username, and you can create files within your home directory and your `/gpfs` directory.  The `/cm` shared directory is also available.  *However*, you don't have `root` power within your container (also unlike Docker).
 
-
-
-
-dlang@mn001:~$ singularity run --hostname container ./ubuntu-18.04.sif
+```
+dlang@mn001:~$ singularity run --hostname centos centos-7.sif
 bash: module: command not found
-dlang@container:~$
+bash-4.2$ whoami
+dlang
+bash-4.2$ pwd
+/home/dlang
+bash-4.2$ touch hello.txt               ### I can create files in my home directory
+bash-4.2$ ls -d /cm/shared
+/cm/shared
+bash-4.2$ ls -d /gpfs/`whoami`          ### My /gpfs directory is visible (and writable)
+/gpfs/dlang
+bash-4.2$ touch /gpfs/`whoami`/hello.txt
+bash-4.2$ yum install python            ### I don't have root power within the container!
+Loaded plugins: fastestmirror, ovl
+ovl: Error while doing RPMdb copy-up:
+[Errno 30] Read-only file system: '/var/lib/rpm/.dbenv.lock'
+You need to be root to perform this command.
+bash-4.2$ sudo yum install python
+bash: sudo: command not found           ### The 'sudo' command doesn't exist within this container
+```
+
+
+
