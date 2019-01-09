@@ -42,11 +42,12 @@ singularity run --hostname centos centos-7.sif
 You should see your shell prompt change, showing that you are running within the container:
 ```
 dlang@mn001:~$ singularity run --hostname centos centos-7.sif
-bash: module: command not found
-bash-4.2$ hostname
+bash: module: command not found            ### this is printed because I have "module load" statements in my bash startup files
+                                           ### and the container does not have the "module" command
+bash-4.2$ hostname                         ### The container can have its own hostname
 centos
-bash-4.2$ cat /etc/redhat-release
-CentOS Linux release 7.6.1810 (Core)
+bash-4.2$ cat /etc/redhat-release          ### The container looks like a RedHat distribution (Symmetry uses Ubuntu)
+CentOS Linux release 7.6.1810 (Core)       ### You could install RPM files here!
 ```
 
 
