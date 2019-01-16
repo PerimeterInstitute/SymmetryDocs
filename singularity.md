@@ -17,6 +17,9 @@ need, compile it once, and have it work on different systems.
 
 The [Singularity Documentation](https://www.sylabs.io/guides/3.0/user-guide/index.html) is quite good, though generally it
 assumes you have *root* powers (on Symmetry, you will not!).
+Useful starting points include:
+ * [Overview of the "singularity" command](https://www.sylabs.io/guides/3.0/user-guide/quick_start.html#overview-of-the-singularity-interface)
+ 
 
 To use Singularity on Symmetry, first load the module:
 ```
