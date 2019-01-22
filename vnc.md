@@ -56,14 +56,33 @@ matching *number* of your VNC server, `symmetry.pi.local:###`
 
 After you click the `Connect` button you should get a window showing you your remote desktop on the Symmetry head node.
 
-![VNC Remote Desktop](/assets/vnc1.jpg)
-
 If you resize this window, the remote desktop will get resized.
 
 On Mac OSX, the TigerVNC application is a bit strange -- in order to get a menu, you must hit the F8 key.  (On recent
 TouchBar laptops, hold the `Fn` key and then type the `F8` key.  This will give you the option of full-screen mode, exiting, etc.
 
 ![VNC F8 Menu](/assets/vnc2.jpg)
+
+## SSH Tunnel
+
+If you are not inside the PI network (VPN or in the building), you can connect to your VNC server using an *SSH tunnel*.
+
+SSH tunnels are created using the `-L` option to the `ssh` program.  For example:
+
+```
+ssh -L 5678:symmetry:5902 mars.perimeterinstitute.ca
+```
+
+will create an ssh tunnel where connecting to port `5678` on your local computer will tunnel through the ssh connection
+and connect to `symmetry` on port `5902`.  The VNC servers listen on port `5900` plus the number after the colon; my VNC
+server number is `2` so I am connecting to port `5902`.
+
+Now, when you start your TigerVNC client, you must tell it to connect to *your* local computer's port `5678`:
+
+![VNC Localhost connection](/assets/vnc3.jpg)
+
+
+
 
 
 
