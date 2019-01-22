@@ -56,14 +56,14 @@ matching *number* of your VNC server, `symmetry.pi.local:###`
 
 After you click the `Connect` button you should get a window showing you your remote desktop on the Symmetry head node.
 
-[![VNC Remote Desktop]({{ site.url }}/assets/vnc1.jpg)
+![VNC Remote Desktop](/assets/vnc1.jpg)
 
 If you resize this window, the remote desktop will get resized.
 
 On Mac OSX, the TigerVNC application is a bit strange -- in order to get a menu, you must hit the F8 key.  (On recent
 TouchBar laptops, hold the `Fn` key and then type the `F8` key.  This will give you the option of full-screen mode, exiting, etc.
 
-[![VNC F8 Menu]({{ site.url }}/assets/vnc2.jpg)
+![VNC F8 Menu](/assets/vnc2.jpg)
 
 
 
