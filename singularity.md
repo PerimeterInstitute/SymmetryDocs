@@ -73,9 +73,17 @@ Loaded plugins: fastestmirror, ovl
 ovl: Error while doing RPMdb copy-up:
 [Errno 30] Read-only file system: '/var/lib/rpm/.dbenv.lock'
 You need to be root to perform this command.
-bash-4.2$ sudo yum install python
-bash: sudo: command not found           ### The 'sudo' command doesn't exist within this container
 ```
+
+## Workflow
+
+Because of the security limitations on running Singularity on Symmetry, it's actually easier to developer your *container*
+on your own computer using *Docker*, and then use the *Docker Hub* to copy the container's files from your computer to
+Symmetry.
+
+To start, go to https://hub.docker.com/ and create an account.
+
+
 
 
 
