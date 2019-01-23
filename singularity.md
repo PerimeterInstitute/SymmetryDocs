@@ -83,7 +83,87 @@ Symmetry.
 
 To start, go to https://hub.docker.com/ and create an account.
 
+Install Docker Desktop on your local computer https://www.docker.com/products/docker-desktop
 
+Log in to your Docker Hub account:
+```
+> docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username:
+Password:
+```
 
+Next, start developing your Dockerfile.  An example is given [here examples/docker-multinest/Dockerfile] of a Dockerfile
+that builds the *MultiNest* Bayesian sampling library.  The first few commands are shown here:
+
+```
+# Start from a modern Ubuntu
+FROM ubuntu:18.04
+
+# Install OS packages
+RUN apt -y update && \
+    apt install -y --no-install-recommends \
+            cmake git g++ ca-certificates make gfortran \
+            libopenblas-dev mpi-default-dev mpi-default-bin ssh \
+            python3-minimal python3-dev python3-pip && \
+    apt clean
+
+# Install Python packages for pymultinest
+RUN pip3 install setuptools wheel && \
+    pip3 install numpy scipy matplotlib mpi4py
+
+# Install github 'master' version of MultiNest
+RUN mkdir -p /src && \
+    cd /src && \
+    git clone https://github.com/JohannesBuchner/MultiNest.git multinest && \
+    cd multinest/build && \
+    cmake .. && \
+    make && \
+    make install && \
+    make clean
+```
+
+Build this Dockerfile using the `docker build` command:
+
+```
+mkdir docker-multinest
+cd docker-multinest
+# Put Dockerfile here...
+docker build .
+```
+
+You can also *tag* the build with a *repository* name.  My Docker Hub username is *dstndstn*; replace the commands below with
+your own user id.
+
+```
+docker build -t dstndstn/pymultinest
+```
+
+This build will take a while!  When it completes, you can *push* it to Docker Hub.  This will upload the container files, so
+can take a while also.
+
+```
+docker push dstndstn/pymultinest
+```
+
+There, now the Docker image is on Docker Hub.  We can finally return to Symmetry and load it into Singularity:
+
+```
+module load singularity
+singularity build pymultinest.sif docker://dstndstn/pymultinest
+singularity run --hostname sing pymultinest.sif
+```
+
+This will pop you into the container (you can tell because your prompt will show the hostname as *sing*):
+
+```
+dlang@mn001:~$ singularity run --hostname sing pymultinest.sif
+bash: module: command not found
+dlang@sing:~$ cd /tmp
+dlang@sing:/tmp$ mpiexec -np 4 python3 /src/pymultinest/pymultinest_demo.py
+ *****************************************************
+ MultiNest v3.10
+.....
+```
 
 
