@@ -1,5 +1,7 @@
+# Start from a modern Ubuntu
 FROM ubuntu:18.04
 
+# Install OS packages
 RUN apt -y update && \
     apt install -y --no-install-recommends \
             cmake git g++ ca-certificates make gfortran \
@@ -7,9 +9,11 @@ RUN apt -y update && \
             python3-minimal python3-dev python3-pip && \
     apt clean
 
+# Install Python packages for pymultinest
 RUN pip3 install setuptools wheel && \
     pip3 install numpy scipy matplotlib mpi4py
 
+# Install github 'master' version of MultiNest
 RUN mkdir -p /src && \
     cd /src && \
     git clone https://github.com/JohannesBuchner/MultiNest.git multinest && \
@@ -19,11 +23,13 @@ RUN mkdir -p /src && \
     make install && \
     make clean
 
+# Install github 'master' version of PyMultiNest
 RUN cd /src && \
     git clone https://github.com/JohannesBuchner/PyMultiNest.git pymultinest && \
     cd pymultinest && \
     python3 setup.py install
 
+# Install github 'master' version of Cuba
 RUN cd /src && \
     git clone https://github.com/JohannesBuchner/cuba cuba && \
     cd cuba && \
@@ -37,6 +43,8 @@ RUN cd /src && \
     ln -s /usr/local/lib/libmultinest.so /usr/lib/ && \
     ln -s /usr/local/lib/libmultinest_mpi.so /usr/lib/
 
+# These are a bunch of tests -- not really required for the Docker container, but useful as a check
+# this the build worked.
 RUN python3 -c "import pymultinest" && \
     python3 -c "import pycuba" && \
     cd src/pymultinest && \
