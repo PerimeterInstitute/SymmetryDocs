@@ -2,7 +2,8 @@
 
 [Singularity](https://www.sylabs.io/singularity/) is a program for running *containers*.
 It is similar to [Docker](https://www.docker.com/), but is specially designed for High-Performance Computing environments.
-For security reasons, we cannot provide Docker on the Symmetry cluster.  However, we do provide Singularity.
+For security reasons, we cannot provide Docker on the Symmetry cluster.  However, we do provide Singularity, and Singularity
+can be used to run Docker containers.
 
 *Containers* are a way of creating a self-contained filesystem that includes all the dependencies, code, and data files
 needed by your application.  This allows it to run in different environments (eg, on your laptop, or on Symmetry head nodes
@@ -50,7 +51,7 @@ bash: module: command not found            ### this is printed because I have "m
 bash-4.2$ hostname                         ### The container can have its own hostname
 centos
 bash-4.2$ cat /etc/redhat-release          ### The container looks like a RedHat distribution (Symmetry uses Ubuntu)
-CentOS Linux release 7.6.1810 (Core)       ### You could install RPM files here!
+CentOS Linux release 7.6.1810 (Core)       ### You could install RPM packages in this container
 ```
 
 Within the container (unlike Docker), you keep your username, and you can create files within your home directory and your `/gpfs` directory.  The `/cm` shared directory is also available.  *However*, you don't have `root` power within your container (also unlike Docker).
@@ -81,9 +82,9 @@ Because of the security limitations on running Singularity on Symmetry, it's act
 on your own computer using *Docker*, and then use the *Docker Hub* to copy the container's files from your computer to
 Symmetry.
 
-To start, go to https://hub.docker.com/ and create an account.
+To start, go to <https://hub.docker.com/> and create an account.
 
-Install Docker Desktop on your local computer https://www.docker.com/products/docker-desktop
+Install Docker Desktop on your local computer <https://www.docker.com/products/docker-desktop>
 
 Log in to your Docker Hub account:
 ```
@@ -93,7 +94,7 @@ Username:
 Password:
 ```
 
-Next, start developing your Dockerfile.  An example is given [here examples/docker-multinest/Dockerfile] of a Dockerfile
+Next, start developing your Dockerfile.  Here is an [example Dockerfile](examples/docker-multinest/Dockerfile)
 that builds the *MultiNest* Bayesian sampling library.  The first few commands are shown here:
 
 ```

@@ -100,6 +100,9 @@ also `module list`, `module unload`, and `module help`.
 
 [Several Python versions are available, documented on this page.](python)
 
+### Containers / Docker / Singularity
+
+[We provide the *Singularity* program for running *containers* on Symmetry.](singularity)
 
 ## Using Symmetry
 
@@ -131,7 +134,7 @@ might need to install a client such as [PuTTY](https://www.putty.org).
 
 [Jupyterhub is documented here.](jupyterhub)
 
-### Remote Desktop
+### Remote Desktop / Mathematica / Matlab
 
 [In order to run graphical desktop applications on the Symmetry head nodes,
 we have a VNC server set up, described here.](vnc)
