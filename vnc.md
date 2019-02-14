@@ -4,9 +4,9 @@ VNC (virtual network computing) is a client/server remote desktop protocol.  The
 from different vendors and they mostly interoperate.
 
 VNC is unusual in that you, as a regular user on the Symmetry machine, start up a VNC server for yourself when you want to use
-it.  That is, you first use `ssh` to connect to Symmetry and run the `vncserver` command to start a VNC server for yourself.
-The server (with your desktop session) will stay alive after you log out of the `ssh` session.  You then start up your VNC
-client program and connect to the VNC server that you started.
+it.  That is, you first use `ssh` to connect to the Symmetry head node and run the `vncserver` command to start a VNC server for yourself.
+The server (with your desktop session) will stay alive after you log out of the `ssh` session.  On the computer where you want to display the desktop (eg, your laptop), you start up a VNC
+client program and connect to the VNC server that you started on Symmetry.
 
 Start by opening an `ssh` connection to Symmetry:
 ```
@@ -37,6 +37,20 @@ will ask you for a new password.
 rm ~/.vnc/config
 ```
 
+You can also run this in one step:
+```
+ssh symmetry vncserver
+```
+or
+```
+ssh symmetry vncserver -list
+```
+to list any currently running desktop sessions you have, or, for example,
+```
+ssh symmetry vncserver -kill :1
+```
+to stop a running desktop session.
+
 VNC servers are identified by a colon and a number.  For example, above, it created the server `mn001:2`.  Ignore the `mn001`
 part for now, but remember the number after the colon.  You will need that number to connect to *your* server, rather than
 someone else's.
@@ -47,10 +61,10 @@ You can list your currently running servers using `vncserver -list`.  You can st
 ## VNC Clients
 
 Several VNC clients are available, and provide different features and slickness:
- * TigerVNC -- Mac and other platforms (we run the TigerVNC server): https://bintray.com/tigervnc/stable/tigervnc/1.9.0
- * RealVNC -- they sell a VNC server and provide free clients (including iOS, Android, and Google Chrome): https://www.realvnc.com/en/connect/download/viewer/
+ * TigerVNC -- Mac and other platforms: <https://bintray.com/tigervnc/stable/tigervnc/1.9.0>
+ * RealVNC -- they sell a VNC server and provide free clients (including iOS, Android, and Google Chrome): <https://www.realvnc.com/en/connect/download/viewer/>
 
-To configure TigerVNC, you can use this [Config file assets/symmetry.tigervnc] as a starting point.  After running the
+To configure TigerVNC, you can use this [Config file](assets/symmetry.tigervnc) as a starting point.  After running the
 `TigerVNC Client` program, click the `Load` button to load this config file.  Note that you will still need to use the
 matching *number* of your VNC server, `symmetry.pi.local:###`
 
@@ -62,6 +76,15 @@ On Mac OSX, the TigerVNC application is a bit strange -- in order to get a menu,
 TouchBar laptops, hold the `Fn` key and then type the `F8` key.  This will give you the option of full-screen mode, exiting, etc.
 
 ![VNC F8 Menu](/assets/vnc2.jpg)
+
+### Applications
+
+To start an application, press the *K* button in the bottom-left.
+Applications are organized into categories, but they don't always make sense;
+*Mathematica* appears in the *Lost and Found* category, so it may be easiest to
+use the *Search* box to find it!
+
+![Finding Mathematica](/assets/mathematica.jpg)
 
 ## SSH Tunnel
 
