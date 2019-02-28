@@ -81,17 +81,16 @@ TouchBar laptops, hold the `Fn` key and then type the `F8` key.  This will give 
 
 #### Mathematica
 
-To start an application, press the *K* button in the bottom-left.
+To start an application, press the button in the bottom-left.
 Applications are organized into categories, but they don't always make sense;
-*Mathematica* appears in the *Lost and Found* category, so it may be easiest to
-use the *Search* box to find it!
+*Mathematica* appears in the *Other* category!
 
 ![Finding Mathematica](/assets/mathematica.jpg)
 
 #### Matlab
 
-*Matlab* does not appear under the *K* start menu, unfortunately.  Instead,
-search for and start the *Konsole* terminal program, and type:
+*Matlab* does not appear in the menu system, unfortunately.  Instead,
+run the *konsole* terminal program, and in the terminal, type:
 ```
 module load matlab
 matlab
