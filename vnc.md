@@ -58,6 +58,9 @@ someone else's.
 You can list your currently running servers using `vncserver -list`.  You can stop a running server with `vncserver -kill :2`
 (substituting your server's number instead of `2`).
 
+*Note* that your vncserver will stay running even after you log out.  You can connect to your desktop server, disconnect, and
+it will *still* stay running.  It will stay alive until you kill it with `vncserver -kill`.  Please do kill it once you are done.
+
 ## VNC Clients
 
 Several VNC clients are available, and provide different features and slickness:
