@@ -47,6 +47,34 @@ environment, and a recent *Julia* version.  If you want to use a
 different programming language, please write a note to
 help@perimeterinstitute.ca with the details!
 
+#### Julia
+
+*Before* using a `Julia` kernel through Jupyterhub, unfortunately, you must
+install the `IJulia` package using the `Julia` command line:
+
+```
+$ module load julia
+$ julia
+               _
+   _       _ _(_)_     |  Documentation: https://docs.julialang.org
+  (_)     | (_) (_)    |
+   _ _   _| |_  __ _   |  Type "?" for help, "]?" for Pkg help.
+  | | | | | | |/ _` |  |
+  | | |_| | | | (_| |  |  Version 1.1.0 (2019-01-21)
+ _/ |\__'_|_|_|\__'_|  |
+|__/                   |
+
+julia> using Pkg
+julia> Pkg.add("IJulia")
+   Cloning default registries into `~/.julia`
+   Cloning registry from "https://github.com/JuliaRegistries/General.git"
+...
+```
+
+We have not figured out a good way to provide the `IJulia` package
+(which connects Julia to Jupyterhub) on a system-wide basis, so this
+installs the `IJulia` package in your home directory.
+
 #### Custom Kernels 
 
 It is possible to add your own *kernels* to the list of kernels.  When it
