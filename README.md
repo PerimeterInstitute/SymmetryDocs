@@ -108,7 +108,7 @@ also `module list`, `module unload`, and `module help`.
 
 ### Access
 
-All researchers at Perimeter have in prinple access to Symmetry.
+All researchers at Perimeter have in principle access to Symmetry.
 Please contact the [help desk](mailto:help@perimeterinstitute.ca) to
 enable this access. It is probably a good idea to enable
 [VPN](https://portal.perimeterinstitute.ca/how-to/sonicwall-mobile-connection-vpn-installation-and-setup-instructions)
