@@ -12,7 +12,7 @@ Please tell your web browser that this is okay (in Firefox: *Advanced*
 
 ![screenshot of https://symmetry.pi.local, with security warning](/assets/jupyterhub-1.png)
 
-![Jupyterhub login screen]({{ site.url }}/assets/jupyterhub-2.png)
+![Jupyterhub login screen](/assets/jupyterhub-2.png)
 
 Log in using your normal PI username and password, without the
 `@perimeterinstitute.ca`.
@@ -26,7 +26,7 @@ available, because we have to wait for a batch job to be scheduled.
 The compute nodes are more powerful and are more suitable for
 expensive computations or memory-hungry applications.
 
-![Jupyterhub Spawn Options screen]({{ site.url }}/assets/jupyterhub-3.png)
+![Jupyterhub Spawn Options screen](/assets/jupyterhub-3.png)
 
 Once you have selected where to run your notebook, you will arrive at
 the main Jupyter notebook page, which by default will show you your
@@ -35,7 +35,7 @@ button at the top-right), and download files (by clicking on them).
 At the top-right there is a *New* drop-down menu to start a new
 *Jupyter kernel*, an interactive programming environment.
 
-![Jupyterhub Spawn Options screen]({{ site.url }}/assets/jupyterhub-4.png)
+![Jupyterhub Spawn Options screen](/assets/jupyterhub-4.png)
 
 If you started running on the head node but would now like to run on a
 compute node, use the *Control Panel* button at the very top-right,
