@@ -10,7 +10,7 @@ secure*, because we don't have a proper security certificate yet.
 Please tell your web browser that this is okay (in Firefox: *Advanced*
 → *Add Exception* → *Confirm Security Exception*).
 
-![screenshot of https://symmetry.pi.local, with security warning]({{ site.url }}/assets/jupyterhub-1.png)
+![screenshot of https://symmetry.pi.local, with security warning](/assets/jupyterhub-1.png)
 
 ![Jupyterhub login screen]({{ site.url }}/assets/jupyterhub-2.png)
 
