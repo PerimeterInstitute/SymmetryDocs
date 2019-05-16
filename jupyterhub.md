@@ -75,6 +75,11 @@ We have not figured out a good way to provide the `IJulia` package
 (which connects Julia to Jupyterhub) on a system-wide basis, so this
 installs the `IJulia` package in your home directory.
 
+#### Haskell
+
+It is possible (but not super easy) to set up a Haskell kernel.  If you are
+interested in doing this, please email `help@perimeterinstitute.ca`.
+
 #### Custom Kernels 
 
 It is possible to add your own *kernels* to the list of kernels.  When it
