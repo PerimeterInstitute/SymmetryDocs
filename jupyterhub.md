@@ -96,7 +96,7 @@ files and modify it for your needs.  For example:
 
 ```
 mkdir -p ~/.local/share/jupyter/kernels
-cp -r /cm/shared/apps/conda-environments/jupyterhub/share/jupyter/kernels/python37-conda ~/.local/share/jupyter/kernels/mykernel
+cp -r /cm/shared/apps/jupyter-kernels/python37-conda ~/.local/share/jupyter/kernels/mykernel
 # Edit ~/.local/share/jupyter/kernels/mykernel/kernel.json
 # to point to the "python" executable inside your environment.
 ```
