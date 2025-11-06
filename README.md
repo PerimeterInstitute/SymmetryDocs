@@ -8,19 +8,13 @@ is called *Symmetry*.
 
 Symmetry is intended to serve the needs of Perimeter researchers,
 filling a gap between personal devices such as laptops and desktops,
-and large national sytems offered e.g. by [Compute
-Canada](https://www.computecanada.ca). As such, each node of Symmetry
+and large national sytems offered e.g. by the
+[Digital Research Alliance of Canada](https://www.alliancecan.ca/)
+(formerly Compute Canada). As such, each node of Symmetry
 is significantly more powerful than a laptop, but cannot compete with
 a national system such as
-[Graham](https://docs.computecanada.ca/wiki/Graham) or
-[Niagara](https://docs.computecanada.ca/wiki/Niagara).
-
-(This documentation is still under construction, and should be
-completed within the next days. Please report errors, omissions, and
-suggestions for this documentation to our [help
-desk](mailto:help@perimeterinstitute.ca).)
-
-
+[Nibi](https://www.alliancecan.ca/en/services/compute/nibi) or
+[Trillium](https://www.alliancecan.ca/en/services/compute/trillium-installation-in-progress).
 
 ## Contact and help
 
@@ -28,12 +22,8 @@ As usual for all technical systems at Perimeter, the main channel to
 report issues and ask for assistance is our [help
 desk](mailto:help@perimeterinstitute.ca).
 
-For online discussions, there is a Gitter chat room [Computing at
-Perimeter](https://gitter.im/Computing-at-Perimeter/Lobby). This chat
-room is not restricted to discussing Symmetry, but is for all topics
-related to Computational Physics at Perimeter.
-
-
+For online discussions, there is a Slack channel in the Perimeter Institute
+workspace, `#symmetry-users`.
 
 ## System description
 
@@ -45,11 +35,17 @@ Symmetry consists of:
   jobs. Each head node has 40 Intel Xeon Silver cores and 200
   GigaBytes of memory (RAM).
 
-- 76 compute nodes, which are designed to run compute-intensive
+- 32 AMD compute nodes, which are designed to run compute-intensive
+  applications. Each compute node has 64 AMD EPYC cores and 256
+  GigaBytes of memory (RAM).
+
+- 56 Intel compute nodes, which are designed to run compute-intensive
   applications. Each compute node has 40 Intel Xeon Gold (Skylake)
   cores and 200 GigaBytes of memory (RAM).
 
-- A file server hosting a GPFS file system offering 233 TeraBytes of
+- 1 GPU node with 8 x H200 NVIDIA GPUs, each with 140 GB of memory.
+
+- A file server hosting a BeeGFS file system offering 233 TeraBytes of
   space.
 
 - A high-performance InfiniBand network connecting the nodes and the
@@ -67,7 +63,7 @@ your home directory.
 
 Pre-installed software:
 
-- [Ubuntu](https://www.ubuntu.com) 16.04 LTS, with many scientific and
+- [Ubuntu](https://www.ubuntu.com) 22.04 LTS, with many scientific and
   development packages (e.g. FFTW, GCC compilers, GSL, LLVM compilers,
   OpenBLAS, OpenMPI, and many more)
 
@@ -100,15 +96,15 @@ also `module list`, `module unload`, and `module help`.
 
 [Several Python versions are available, documented on this page.](python)
 
-### Containers / Docker / Singularity
+### Containers / Docker / Singularity / Apptainer
 
-[We provide the *Singularity* program for running *containers* on Symmetry.](singularity)
+[We provide the *Apptainer* program for running *containers* on Symmetry.](apptainer)
 
 ## Using Symmetry
 
 ### Access
 
-All researchers at Perimeter have in principle access to Symmetry.
+All researchers at Perimeter can in principle get access to Symmetry.
 Please contact the [help desk](mailto:help@perimeterinstitute.ca) to
 enable this access. It is probably a good idea to enable
 [VPN](https://portal.perimeterinstitute.ca/how-to/sonicwall-mobile-connection-vpn-installation-and-setup-instructions)
@@ -121,7 +117,8 @@ based way using `ssh`, and via a web browser and `JupyterHub`:
 
 #### Access via ssh
 
-To log in, use `ssh USERNAME@symmetry`. (Replace `USERNAME` with your
+If you are inside the PI building, or using the VPN, you can
+log in using `ssh USERNAME@symmetry`. (Replace `USERNAME` with your
 user name.) This will ask for your Perimeter password. We recommend
 generating ssh keys and using an ssh key chain to allow a
 password-less access. (Question: Where is a good tutorial for this?)
@@ -130,6 +127,12 @@ On Linux and MacOS, ssh is pre-installed. On Windows, you
 might need to install a client such as [PuTTY](https://www.putty.org).
 (Question: Is there a better alternative to PuTTY?)
 
+If you are outside the building, you can either use the VPN,
+or you can use the "jump hosts", `earth.perimeterinstitute.ca` and
+`saturn.perimeterinstitute.ca`.  That is, you must first `ssh` to one
+of these computers, and then `ssh symmetry` or `ssh mn003` to reach the
+Symmetry head node.
+
 #### Access via JupyterHub
 
 [Jupyterhub is documented here.](jupyterhub)
@@ -137,8 +140,7 @@ might need to install a client such as [PuTTY](https://www.putty.org).
 ### Remote Desktop / Mathematica / Matlab
 
 [In order to run graphical desktop applications on the Symmetry head nodes,
-we have a VNC server set up, described here.](vnc)
-
+we have a Guacamole server set up, described here.](guacamole)
 
 ### Running jobs
 
@@ -318,4 +320,4 @@ a directory of yours, otherwise you will not see the output.
 
 ### File systems
 
-(home directory, GPFS)
+(home directory, BeeGFS)
